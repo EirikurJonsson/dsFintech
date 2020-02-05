@@ -2,6 +2,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 try:
     df = pd.read_csv("ETH_EUR.csv", parse_dates = ["Date"])
     df2 = pd.read_csv(("NASDAQOMX.csv"))
@@ -60,7 +61,25 @@ def nVis(df, y, roll):
     plt.legend()
     plt.show()
 
-a = [50,200,90]
 
-nVis(df, "Open", roll = a)
-
+def nLogReturns(df, x):
+    '''
+    This function takes a data frame and the column
+    that is to be used to calculate log returns. 
+    For this function I will not add a time seperator since
+    it is not neccissary in this case.
+    '''
+    df["pctChange"] = df[x].pct_change()
+    df["log_ret"] = np.log(df[x]) - np.log(df[x].shift(1))
+    nList = ["pctChange", "log_ret"]
+    for i in nList:
+        print("Mean:", df[i])
+        print("Median", df[i])
+        print("Std:", df[i])
+        plt.hist(df[i], label = i, bins = 40)
+        print("========================================================")
+    plt.gca().set(title = f"Log return of {x}", xlabel = "Date")
+    plt.legend()
+    plt.show()
+    
+nLogReturns(df, "Open")
