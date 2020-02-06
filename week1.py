@@ -13,9 +13,20 @@ except FileNotFoundError:
     df.to_csv("ETH_EUR", encoding = "utf-8")
     df2.to_csv("NASDAQOMX", encoding = "utf-8")
 
-# print(df.head())
-# print("=====================================================")
-# print(df2.head())
+'''
+Joining the data frame using the join function of pandas
+data frame. Will be using the date time index to join
+by.
+'''
+##########################################################################
+############# Not neccissary not run the next two lines###################
+#############    unless you dont have this csv file    ###################
+########################################################################## 
+# df3 = df.join(df2, lsuffix = "_ETH_EUR", rsuffix = "_OMX")
+# df3.to_csv("joined.csv")
+
+df3 = pd.read_csv("joined.csv")
+df3 = df3.set_index("Date")
 
 def nDescriptive(df, year = 0):
     '''
@@ -81,5 +92,4 @@ def nLogReturns(df, x):
     plt.gca().set(title = f"Log return of {x}", xlabel = "Date")
     plt.legend()
     plt.show()
-    
-nLogReturns(df, "Open")
+
