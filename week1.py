@@ -4,12 +4,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 try:
-    df = pd.read_csv("ETH_EUR.csv", parse_dates = ["Date"])
-    df2 = pd.read_csv(("NASDAQOMX.csv"))
+    df = pd.read_csv("ETH_EUR.csv", index_col = 0)
+    df2 = pd.read_csv("NASDAQOMX.csv", index_col = 0) 
 except FileNotFoundError:
     import quandl
-    df = quandl.get("GDAX/ETH_EUR", authtoken = "3CdfXCg8D_CWBs7UAwKr")
-    df2 = quandl.get("NASDAQOMX/OMXN40", authtoken= "3CdfXCg8D_CWBs7UAwKr")
+    df = quandl.get("GDAX/ETH_EUR", authtoken = "3CdfXCg8D_CWBs7UAwKr", index_col = 0)
+    df2 = quandl.get("NASDAQOMX/OMXN40", authtoken= "3CdfXCg8D_CWBs7UAwKr", index_col = 0)
     df.to_csv("ETH_EUR", encoding = "utf-8")
     df2.to_csv("NASDAQOMX", encoding = "utf-8")
 
@@ -55,6 +55,7 @@ def nDescriptive(df, year = 0):
             print(f"The quantile: {df[i].quantile([0.25,0.5,0.75])}")
 
 
+
 def nVis(df, y, roll):
     if isinstance(roll, list):
         plt.figure(figsize = (16,5), dpi = 100)
@@ -72,7 +73,7 @@ def nVis(df, y, roll):
     plt.legend()
     plt.show()
 
-nVis(df, "Low", roll = 50)
+
 def nLogReturns(df, x):
     '''
     This function takes a data frame and the column
@@ -81,4 +82,6 @@ def nLogReturns(df, x):
     it is not neccissary in this case.
     '''
     df[f"log{x}"] = np.log(df[x]) / np.log(df[x].shift(1))
+    df[f"vol{x}"] = df[f"log{x}"].rolling(252).std() * np.sqrt(252)
+
 
