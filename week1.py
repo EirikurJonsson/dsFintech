@@ -53,8 +53,8 @@ def nDescriptive(df, year = 0):
             print(f"The Median: {df[i].median()}")
             print(f"The Std: {df[i].std()}")
             print(f"The quantile: {df[i].quantile([0.25,0.5,0.75])}")
-        
-print(df.index())
+
+
 def nVis(df, y, roll):
     if isinstance(roll, list):
         plt.figure(figsize = (16,5), dpi = 100)
