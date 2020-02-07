@@ -54,7 +54,7 @@ def nDescriptive(df, year = 0):
             print(f"The Std: {df[i].std()}")
             print(f"The quantile: {df[i].quantile([0.25,0.5,0.75])}")
         
-
+print(df.index())
 def nVis(df, y, roll):
     if isinstance(roll, list):
         plt.figure(figsize = (16,5), dpi = 100)
@@ -72,7 +72,7 @@ def nVis(df, y, roll):
     plt.legend()
     plt.show()
 
-
+nVis(df, "Low", roll = 50)
 def nLogReturns(df, x):
     '''
     This function takes a data frame and the column
@@ -80,16 +80,5 @@ def nLogReturns(df, x):
     For this function I will not add a time seperator since
     it is not neccissary in this case.
     '''
-    df["pctChange"] = df[x].pct_change()
-    df["log_ret"] = np.log(df[x]) - np.log(df[x].shift(1))
-    nList = ["pctChange", "log_ret"]
-    for i in nList:
-        print("Mean:", df[i])
-        print("Median", df[i])
-        print("Std:", df[i])
-        plt.hist(df[i], label = i, bins = 40)
-        print("========================================================")
-    plt.gca().set(title = f"Log return of {x}", xlabel = "Date")
-    plt.legend()
-    plt.show()
+    df[f"log{x}"] = np.log(df[x]) / np.log(df[x].shift(1))
 
