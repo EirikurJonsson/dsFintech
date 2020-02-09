@@ -81,7 +81,10 @@ def nLogReturns(df, x):
     For this function I will not add a time seperator since
     it is not neccissary in this case.
     '''
-    df[f"log{x}"] = np.log(df[x]) / np.log(df[x].shift(1))
+    df[f"log{x}"] = np.log(df[x] / df[x].shift(1))
     df[f"vol{x}"] = df[f"log{x}"].rolling(252).std() * np.sqrt(252)
+
+nLogReturns(df, "Low")
+print(df["logLow"])
 
 
