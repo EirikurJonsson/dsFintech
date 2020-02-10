@@ -19,7 +19,7 @@ data frame. Will be using the date time index to join
 by.
 '''
 ##########################################################################
-############# Not neccissary not run the next two lines###################
+############# Not neccissary not run the next two lines ##################
 #############    unless you dont have this csv file    ###################
 ########################################################################## 
 # df3 = df.join(df2, lsuffix = "_ETH_EUR", rsuffix = "_OMX")
