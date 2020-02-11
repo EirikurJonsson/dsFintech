@@ -85,6 +85,7 @@ def nLogReturns(df, x):
     df[f"vol{x}"] = df[f"log{x}"].rolling(252).std() * np.sqrt(252)
 
 nLogReturns(df, "Low")
-print(df["logLow"])
+
+
 
 
